@@ -1,4 +1,4 @@
-# Launch and log into a Ubuntu 16.05 instance in AWS
+# Launch and log into a Ubuntu 16.04 instance in AWS
 
 
 sudo apt-get update
@@ -17,10 +17,11 @@ git clone https://github.com/haskell/hackage-server/
 cd hackage-server
 
 # edit cabal.project and get rid of allow-newer field
+sed -e 's/allow-newer/# allow-newer/' -i '' .bak cabal.project
 
 time cabal new-build -j
 
-host="ec2-52-87-151-98.compute-1.amazonaws.com"
+host="actual-host.compute-1.amazonaws.com"
 
 ./dist-newstyle/build/x86_64-linux/ghc-8.2.2/hackage-server-0.5.1/c/hackage-server/build/hackage-server/hackage-server init --static-dir $(pwd)/datafiles
 ./dist-newstyle/build/x86_64-linux/ghc-8.2.2/hackage-server-0.5.1/c/hackage-server/build/hackage-server/hackage-server run --static-dir $(pwd)/datafiles --base-uri=http://${host}:8080/ --ip=0.0.0.0
